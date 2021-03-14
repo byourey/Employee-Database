@@ -206,12 +206,12 @@ function addEmployee() {
 
         connection.query(query, (err, results) => {
             if (err) {
-                console.log('Mayhem!! ', err)
+                console.log(err)
             } else {
                 console.log('\n');
                 console.table(results);
                 console.log('\n');
-                mainMenu()
+                questionsPrompt()
             }
             })
     }
