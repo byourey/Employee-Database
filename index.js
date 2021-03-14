@@ -94,8 +94,11 @@ function questionsPrompt() {
                 break;
 
             case "Exit":
-                connection.exit();
+                connection.end();
                 break;
+            default:
+                console.log(`Invalid action: ${answers.task}`);
+            break;
         }
 
 
@@ -121,7 +124,6 @@ function addDepartment() {
             } else {
                 console.log("Department created");
             }
-            questionsPrompt()
         }
         
         );
@@ -159,6 +161,7 @@ function addRole() {
         console.log(answers.salary);
         console.log(answers.newRoleDepartment);
 
+        questionsPrompt()
     }).catch(err => console.log(err));
 }
 
