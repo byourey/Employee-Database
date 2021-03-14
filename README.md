@@ -16,3 +16,5 @@ User can add employees, roles or departments as well delete roles or departments
 * Inquirer
 * MySQL
 
+## Usage
+<a href="https://screencast-o-matic.com/watch/cre23oVcgUM">Video</a>

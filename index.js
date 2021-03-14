@@ -192,7 +192,7 @@ function addEmployee() {
             name: "managername",
             message: "What is the name of the employee manager?",
             choices: [
-                'John Doe',
+                    'John Doe',
                     'Mike Chan',
                     'Ashley Rodriguez',
                     'Kevin Tupic',
