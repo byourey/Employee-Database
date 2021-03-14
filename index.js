@@ -2,8 +2,6 @@ const inquirer = require('inquirer');
 const mysql = require('mysql');
 const consTable = require("console.table");
 
-
-
 const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -127,7 +125,9 @@ function addDepartment() {
         }
         
         );
-    })
+
+        questionsPrompt()
+        }).catch(err => console.log(err));
 }
 
 
@@ -187,18 +187,29 @@ function addEmployee() {
         }, {
             type: "input",
             name: "managername",
-            message: "What is the name of the employee manager?"
+            message: "What is the name of the employee manager?",
+            choices: [
+                'John Doe',
+                    'Mike Chan',
+                    'Ashley Rodriguez',
+                    'Kevin Tupic',
+                    'Kunal Singh',
+                    'Malia Brown',
+                    'Sarah Lourd',
+                    'Tom Allen',
+            ]
         }
 
     ])
-    .then(answers => {
-        console.log(answers);
-        // connection.query("INSERT INTO employee (firstname, lastname, role, managername) VALUES 
-        (answers.firstname, answers.lastname, answers.role, answers.managername)
-        questionsPrompt()
-        .catch(err => console.log(err));
+    .then((answers) => {
+        console.log(answers.firstName);
+        console.log(answers.lastName);
+        console.log(answers.role);
+        console.log(answers.manager);
 
-        })
+        questionsPrompt()
+    }).catch(err => console.log(err));
+
     }
 
     function addViewEmployees() {
