@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
-const consTable = require("console.table");
+require("console.table");
+const db = require('./db');
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -109,26 +110,25 @@ function addDepartment() {
     inquirer.prompt([
         {
             type:"input",
-            name: "name",
+            name: "departmentName",
             message: "Department name?"
          }
     ])
     .then((answers) => {
-        connection.query('INSERT INTO department SET', 
+        connection.query('INSERT INTO department SET ?', 
         {
             name: answers.departmentName
-        },
+        }),
         (err) => {
             if (err) {
                 console.log(err)
             } else {
-                console.log("Department created");
+                console.table("Department created");
             }
         }
         
-        );
-
-        questionsPrompt()
+        
+         questionsPrompt()
         }).catch(err => console.log(err));
 }
 
@@ -215,19 +215,20 @@ function addEmployee() {
 
     }
 
-    function addViewEmployees() {
-        const query = "SELECT employee.id, employee.first_name, employee.last_name, role.title AS job_title, role.salary, CONCAT(manager.first_name ,' ', manager.last_name) AS Manager FROM employee LEFT JOIN role ON employee.role_id=role.id LEFT JOIN employee manager ON manager.id=employee.manager_id";
-
-        connection.query(query, (err, results) => {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log('\n');
-                console.table(results);
-                console.log('\n');
-                questionsPrompt()
-            }
-            })
+    async function addViewEmployees() {
+        const query = await db.findAllemployees();
+        console.table(query);
+        questionsPrompt();
+        // connection.query(query, (err, results) => {
+        //     if (err) {
+        //         console.log(err)
+        //     } else {
+        //         console.log('\n');
+        //         consTable(query);
+        //         console.log('\n');
+        //         questionsPrompt()
+        //     }
+        //     })
     }
 
     function addViewDepartment() {
@@ -246,6 +247,8 @@ function addEmployee() {
             }
         ]).then((answers) => {
             console.log(answers.viewDepartment);
+
+            
             questionsPrompt()
         }).catch(err => console.log(err));
             
