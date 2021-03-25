@@ -189,7 +189,7 @@ function addEmployee() {
             ]
         }, {
             type: "input",
-            name: "managername",
+            name: "managerName",
             message: "What is the name of the employee manager?",
             choices: [
                     'John Doe',
@@ -208,7 +208,7 @@ function addEmployee() {
         console.log(answers.firstName);
         console.log(answers.lastName);
         console.log(answers.role);
-        console.log(answers.manager);
+        console.log(answers.managerName);
 
         questionsPrompt()
     }).catch(err => console.log(err));
@@ -232,27 +232,18 @@ function addEmployee() {
     }
 
     function addViewDepartment() {
-        inquirer.prompt([
-            {
-                type: "list",
-                name: "viewDepartment",
-                message: "What department you would like to see?",
-                choices: [
-                    'Engineering',
-                    'Finance',
-                    'Legal',
-                    'Sales'
-                ]
-        
+        connection.query('SELECT * FROM department ', (err, result) => {
+            if(err) {
+                console.log(err)
+            } else {
+                console.log('\n');
+                console.log(result);
+                console.log('\n');
+                questionsPrompt()
             }
-        ]).then((answers) => {
-            console.log(answers.viewDepartment);
-
-            
-            questionsPrompt()
-        }).catch(err => console.log(err));
-            
-        }
+        }   
+        );   
+     }
     
 
     function addViewEmployeesByManager() {
@@ -372,7 +363,7 @@ function addEmployee() {
                 ]
             }
         ]).then((answers) => {
-            console.log(answers.addDeleteEmployee);
+            console.log(answers.deleteEmployee);
     
             questionsPrompt()
         }).catch(err => console.log(err));
